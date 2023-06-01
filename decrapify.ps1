@@ -650,6 +650,29 @@ $services = @(
 
 Get-Service | where {$_.name -in $services} | stop-service -passthru | Set-Service -StartupType Disabled
 
+## Auto lock
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "InactivityTimeoutSecs" -Type DWord -Value 1200
+## Disable Auto lock
+# Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "InactivityTimeoutSecs" -Type DWord -Value 0
+
+## Old Right click
+If (!(Test-Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}")) {
+	New-Item -Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" | Out-Null
+}
+If (!(Test-Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InProcServer32")) {
+	New-Item -Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InProcServer32" | Out-Null
+}
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InProcServer32" -Name "(Default)" -Value ""
+## Enable New Right Click
+# Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InProcServer32" -Name "" -Value "C:\Windows\System32\Windows.UI.FileExplorer.dll"
+# STOP HERE Treader
+exit
+
+
+
+
+
+
 #   Description:
 # This script optimizes Windows updates by disabling automatic download and
 # seeding updates to other computers.
