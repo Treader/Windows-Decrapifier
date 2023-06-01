@@ -36,9 +36,9 @@ Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\Allo
 # Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name "Value" -Type DWord -Value 1
 
 # Disable SmartScreen Filter
-Write-Host "Disabling SmartScreen Filter..."
-Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Type String -Value "Off"
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation" -Type DWord -Value 0
+#Write-Host "Disabling SmartScreen Filter..."
+#Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Type String -Value "Off"
+#Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation" -Type DWord -Value 0
 
 # Enable SmartScreen Filter
 # Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Type String -Value "RequireAdmin"
@@ -145,8 +145,8 @@ Set-Service "DiagTrack" -StartupType Disabled
 # Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "PromptOnSecureDesktop" -Type DWord -Value 0
 
 # Raise UAC level
-# Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "ConsentPromptBehaviorAdmin" -Type DWord -Value 5
-# Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "PromptOnSecureDesktop" -Type DWord -Value 1
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "ConsentPromptBehaviorAdmin" -Type DWord -Value 5
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "PromptOnSecureDesktop" -Type DWord -Value 1
 
 # Enable sharing mapped drives between users
 # Write-Host "Enabling sharing mapped drives between users..."
@@ -176,12 +176,12 @@ Set-ItemProperty -Path "HKLM:\Software\Microsoft\WindowsUpdate\UX\Settings" -Nam
 # Enable Windows Update automatic restart
 # Set-ItemProperty -Path "HKLM:\Software\Microsoft\WindowsUpdate\UX\Settings" -Name "UxOption" -Type DWord -Value 0
 
-# Stop and disable Home Groups services
-Write-Host "Stopping and disabling Home Groups services..."
-Stop-Service "HomeGroupListener"
-Set-Service "HomeGroupListener" -StartupType Disabled
-Stop-Service "HomeGroupProvider"
-Set-Service "HomeGroupProvider" -StartupType Disabled
+# Stop and disable Home Groups services - Moved to Services section
+#Write-Host "Stopping and disabling Home Groups services..."
+#Stop-Service "HomeGroupListener"
+#Set-Service "HomeGroupListener" -StartupType Disabled
+#Stop-Service "HomeGroupProvider"
+#Set-Service "HomeGroupProvider" -StartupType Disabled
 
 # Enable and start Home Groups services
 # Set-Service "HomeGroupListener" -StartupType Manual
@@ -231,18 +231,18 @@ Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\W
 # Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen"
 
 # Disable Autoplay
-# Write-Host "Disabling Autoplay..."
-# Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" -Name "DisableAutoplay" -Type DWord -Value 1
+Write-Host "Disabling Autoplay..."
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" -Name "DisableAutoplay" -Type DWord -Value 1
 
 # Enable Autoplay
 # Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" -Name "DisableAutoplay" -Type DWord -Value 0
 
-# Disable Autorun for all drives
-# Write-Host "Disabling Autorun for all drives..."
-# If (!(Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {
-#	New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" | Out-Null
-#}
-# Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Type DWord -Value 255
+#Disable Autorun for all drives
+Write-Host "Disabling Autorun for all drives..."
+If (!(Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {
+  New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" | Out-Null
+}
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Type DWord -Value 255
 
 # Enable Autorun
 # Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun"
@@ -262,8 +262,8 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" 
 # Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode"
 
 # Hide Task View button
-# Write-Host "Hiding Task View button..."
-# Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Type DWord -Value 0
+Write-Host "Hiding Task View button..."
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Type DWord -Value 0
 
 # Show Task View button
 # Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton"
@@ -276,8 +276,8 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" 
 # Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarSmallIcons"
 
 # Show titles in taskbar
-# Write-Host "Showing titles in taskbar..."
-# Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarGlomLevel" -Type DWord -Value 1
+Write-Host "Showing titles in taskbar..."
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarGlomLevel" -Type DWord -Value 1
 
 # Hide titles in taskbar
 # Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarGlomLevel"
@@ -391,6 +391,55 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 # $langs = Get-WinUserLanguageList
 # Set-WinUserLanguageList ($langs | ? {$_.LanguageTag -ne "en-US"}) -Force
 
+##########
+# Windows Optional Features
+# Get-WindowsOptionalFeature -Online | where {$_.State -eq 'Enabled'} | select FeatureName
+##########
+Disable-WindowsOptionalFeature -online -NoRestart -FeatureName "Printing-Foundation-InternetPrinting-Client"
+Disable-WindowsOptionalFeature -online -NoRestart -FeatureName "Printing-Foundation-Features"
+Disable-WindowsOptionalFeature -online -NoRestart -FeatureName "WorkFolders-Client"
+Disable-WindowsOptionalFeature -online -NoRestart -FeatureName "MicrosoftWindowsPowerShellV2"
+Disable-WindowsOptionalFeature -online -NoRestart -FeatureName "MicrosoftWindowsPowerShellV2Root"
+Disable-WindowsOptionalFeature -online -NoRestart -FeatureName "MSRDC-Infrastructure"
+
+##########
+# Settings > Apps > Optional Features
+# Get-WindowsCapability -Online | where {$_.state -eq 'Installed'} | Select Name
+##########
+Get-WindowsCapability -Online | where {$_.name -like "Microsoft.Windows.WordPad*" -and $_.State -eq 'Installed' } | Remove-WindowsCapability -Online
+Get-WindowsCapability -Online | where {$_.name -like "Browser.InternetExplorer*" -and $_.State -eq 'Installed' } | Remove-WindowsCapability -Online
+Get-WindowsCapability -Online | where {$_.name -like "OneCoreUAP.OneSync*" -and $_.State -eq 'Installed' } | Remove-WindowsCapability -Online
+
+##########
+# get-appxprovisionedpackage -Online | select DisplayName
+##########
+$appxprovisionedpackageRemoveDisplayName = @(
+"Clipchamp.Clipchamp"
+"Microsoft.BingNews"
+"Microsoft.BingWeather"
+"Microsoft.GamingApp"
+"Microsoft.GetHelp"
+"Microsoft.Getstarted"
+"Microsoft.MicrosoftOfficeHub"
+"Microsoft.People"
+"Microsoft.WindowsSoundRecorder"
+"Microsoft.Todos"
+"Microsoft.WindowsAlarms"
+"microsoft.windowscommunicationsapps"
+"Microsoft.WindowsFeedbackHub"
+"Microsoft.WindowsMaps"
+"Microsoft.Xbox.TCUI"
+"Microsoft.XboxGameOverlay"
+"Microsoft.XboxGamingOverlay"
+"Microsoft.XboxIdentityProvider"
+"Microsoft.XboxSpeechToTextOverlay"
+"Microsoft.ZuneVideo"
+"MicrosoftCorporationII.QuickAssist"
+"MicrosoftTeams"
+)
+
+get-appxprovisionedpackage -Online | where {$_.DisplayName -in $appxprovisionedpackageRemoveDisplayName} | Remove-AppxProvisionedPackage -AllUsers
+
 
 
 ##########
@@ -447,16 +496,16 @@ Get-AppxPackage "Microsoft.BingSports" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.BingWeather" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.Getstarted" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.MicrosoftOfficeHub" | Remove-AppxPackage
-Get-AppxPackage "Microsoft.MicrosoftSolitaireCollection" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.MicrosoftSolitaireCollection" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.Office.OneNote" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.People" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.SkypeApp" | Remove-AppxPackage
 # Get-AppxPackage "Microsoft.Windows.Photos" | Remove-AppxPackage
-# Get-AppxPackage "Microsoft.WindowsAlarms" | Remove-AppxPackage
-Get-AppxPackage "Microsoft.WindowsCamera" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.WindowsAlarms" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.WindowsCamera" | Remove-AppxPackage
 Get-AppxPackage "microsoft.windowscommunicationsapps" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.WindowsMaps" | Remove-AppxPackage
-Get-AppxPackage "Microsoft.WindowsPhone" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.WindowsPhone" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.WindowsSoundRecorder" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.XboxApp" | Remove-AppxPackage
 # Get-AppxPackage "Microsoft.ZuneMusic" | Remove-AppxPackage
@@ -484,7 +533,6 @@ Get-AppxPackage "Facebook.InstagramBeta" | Remove-AppPackage
 Get-AppxPackage "AdobeSystemsIncorporated.AdobeCreativeCloudExpress" | Remove-AppPackage
 Get-AppxPackage "AmazonVideo.PrimeVideo" | Remove-AppPackage
 Get-AppxPackage "BytedancePte.Ltd.TikTok" | Remove-AppPackage
-
 
 # Install default Microsoft applications
 # Add-AppxPackage -DisableDevelopmentMode -Register "$($(Get-AppXPackage -AllUsers "Microsoft.3DBuilder").InstallLocation)\AppXManifest.xml"
@@ -526,10 +574,6 @@ Get-AppxPackage "BytedancePte.Ltd.TikTok" | Remove-AppPackage
 
 # Install Windows Media Player
 # dism /online /Enable-Feature /FeatureName:MediaPlayback /Quiet /NoRestart
-
-# Uninstall Work Folders Client
-Write-Host "Uninstalling Work Folders Client..."
-dism /online /Disable-Feature /FeatureName:WorkFolders-Client /Quiet /NoRestart
 
 # Install Work Folders Client
 # dism /online /Enable-Feature /FeatureName:WorkFolders-Client /Quiet /NoRestart
@@ -589,7 +633,7 @@ $services = @(
     # "RemoteRegistry"                         # Remote Registry
     "SharedAccess"                             # Internet Connection Sharing (ICS)
     "TrkWks"                                   # Distributed Link Tracking Client
-    # "WbioSrvc"                               # Windows Biometric Service (required for Fingerprint reader / facial detection)
+    "WbioSrvc"                               # Windows Biometric Service (required for Fingerprint reader / facial detection)
     #"WlanSvc"                                 # WLAN AutoConfig
     "WMPNetworkSvc"                            # Windows Media Player Network Sharing Service
     #"wscsvc"                                  # Windows Security Center Service
@@ -598,46 +642,44 @@ $services = @(
     "XblGameSave"                              # Xbox Live Game Save Service
     "XboxNetApiSvc"                            # Xbox Live Networking Service
     "ndu"                                      # Windows Network Data Usage Monitor
+    "HomeGroupListener"
+    "HomeGroupProvider"
     # Services which cannot be disabled
     #"WdNisSvc"
 )
 
-foreach ($service in $services) {
-    Write-Output "Trying to disable $service"
-    Get-Service -Name $service | Set-Service -StartupType Disabled
-}
-
+Get-Service | where {$_.name -in $services} | stop-service -passthru | Set-Service -StartupType Disabled
 
 #   Description:
 # This script optimizes Windows updates by disabling automatic download and
 # seeding updates to other computers.
 #
-Import-Module -DisableNameChecking $PSScriptRoot\..\lib\New-FolderForced.psm1
+#Import-Module -DisableNameChecking $PSScriptRoot\..\lib\New-FolderForced.psm1
 
-Write-Output "Disable automatic download and installation of Windows updates"
-New-FolderForced -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU"
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU" "NoAutoUpdate" 0
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU" "AUOptions" 2
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU" "ScheduledInstallDay" 0
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU" "ScheduledInstallTime" 3
+#Write-Output "Disable automatic download and installation of Windows updates"
+#New-FolderForced -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU"
+#Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU" "NoAutoUpdate" 0
+#Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU" "AUOptions" 2
+#Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU" "ScheduledInstallDay" 0
+#Set-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\WindowsUpdate\AU" "ScheduledInstallTime" 3
 
-Write-Output "Disable seeding of updates to other computers via Group Policies"
-New-FolderForced -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization"
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" "DODownloadMode" 0
-
-#echo "Disabling automatic driver update"
-#sp "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" "SearchOrderConfig" 0
-
-$objSID = New-Object System.Security.Principal.SecurityIdentifier "S-1-1-0"
-$EveryOne = $objSID.Translate( [System.Security.Principal.NTAccount]).Value
-
-
-Write-Output "Disable 'Updates are available' message"
-
-takeown /F "$env:WinDIR\System32\MusNotification.exe"
-icacls "$env:WinDIR\System32\MusNotification.exe" /deny "$($EveryOne):(X)"
-takeown /F "$env:WinDIR\System32\MusNotificationUx.exe"
-icacls "$env:WinDIR\System32\MusNotificationUx.exe" /deny "$($EveryOne):(X)"
+#Write-Output "Disable seeding of updates to other computers via Group Policies"
+#New-FolderForced -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization"
+#Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" "DODownloadMode" 0
+#
+##echo "Disabling automatic driver update"
+##sp "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" "SearchOrderConfig" 0
+#
+#$objSID = New-Object System.Security.Principal.SecurityIdentifier "S-1-1-0"
+##$EveryOne = $objSID.Translate( [System.Security.Principal.NTAccount]).Value
+#
+#
+#Write-Output "Disable 'Updates are available' message"
+#
+#takeown /F "$env:WinDIR\System32\MusNotification.exe"
+#icacls "$env:WinDIR\System32\MusNotification.exe" /deny "$($EveryOne):(X)"
+#takeown /F "$env:WinDIR\System32\MusNotificationUx.exe"
+#icacls "$env:WinDIR\System32\MusNotificationUx.exe" /deny "$($EveryOne):(X)"
 
 
 # This script removes unwanted Apps that come with Windows. If you  do not want
