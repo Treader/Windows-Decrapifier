@@ -665,10 +665,48 @@ If (!(Test-Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae
 Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InProcServer32" -Name "(Default)" -Value ""
 ## Enable New Right Click
 # Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InProcServer32" -Name "" -Value "C:\Windows\System32\Windows.UI.FileExplorer.dll"
+
+## Disable Edge running in background
+If (!(Test-Path "HKLM:\Software\Policies\Microsoft\Edge")) {
+	New-Item -Path "HKLM:\Software\Policies\Microsoft\Edge" | Out-Null
+	New-Item -Path "HKLM:\Software\Policies\Microsoft\Edge\Recommended" | Out-Null
+}
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Edge" -Name "BackgroundModeEnabled" -Type Dword -Value 0
+
+## Disable Pre Launch
+If (!(Test-Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge")) {
+	New-Item -Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge" | Out-Null
+}
+If (!(Test-Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge\Main")) {
+	New-Item -Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge\Main" | Out-Null
+}
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge\Main" -Name "AllowPrelaunch" -Type Dword -Value 0
+
+## Disable Edge Startup Boost
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Edge\" -Name "StartupBoostEnabled" -Type Dword -Value 0
+Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -name "MicrosoftEdgeAutoLaunch*"
+
+## Disable Tab Preloading
+If (!(Test-Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge\TabPreloader")) {
+	New-Item -Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge\TabPreloader" | Out-Null
+}
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge\TabPreloader" -Name "AllowTabPreloading" -Type Dword -Value 0
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\MicrosoftEdge\Main" -Name "NewTabPagePrerenderEnabled" -Type Dword -Value 0
+
 # STOP HERE Treader
 exit
 
-
+###
+###
+###
+###
+###
+###
+###
+###
+###
+###
+###
 
 
 
