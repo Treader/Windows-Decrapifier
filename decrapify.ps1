@@ -1168,6 +1168,13 @@ reg add "HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Pe
 reg add "HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "AppsUseLightTheme" /t "REG_DWORD" /d "0" /f
 reg add "HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "SystemUsesLightTheme" /t "REG_DWORD" /d "0" /f
 
+# Add Open in Photoshop to image files.
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Classes\SystemFileAssociations\image\Shell\Edit with Photoshop"
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Classes\SystemFileAssociations\image\Shell\Edit with Photoshop\command"
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Classes\SystemFileAssociations\image\Shell\Edit with Photoshop\command" /ve /d "\"c:\program files\adobe\adobe photoshop 2023\Photoshop.exe\" \"%1\""
+
+
+
 ##########
 # Restart
 ##########
